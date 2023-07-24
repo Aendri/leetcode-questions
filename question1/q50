@@ -1,0 +1,48 @@
+package main
+
+import (
+	"fmt"
+)
+
+//func MyPow(x float64, y float64) float64 {
+//res := math.Pow(x, y)
+//return res
+//}
+
+//func main() {
+//var X float64
+//var Y float64
+//fmt.Print("\n enter the number to find the value")
+//fmt.Scanln(&X)
+
+//fmt.Print("\n enter the number to find the value")
+//fmt.Scanln(&Y)
+//fmt.Println(MyPow(X, Y))
+
+// }
+func myPow(x float64, n int) float64 {
+	if n == 0 {
+		return 1
+	}
+	if n == 1 {
+		return x
+	}
+	if n < 0 {
+		return 1.0 / myPow(x, -n)
+	}
+	if n%2 == 0 {
+		return myPow(x*x, n/2)
+	}
+	return x * myPow(x, n-1)
+}
+
+func main() {
+	var x float64
+	var n int
+	fmt.Print("\n enter the number to find the value")
+	fmt.Scanln(&x)
+	fmt.Print("\n enter the number to find the value")
+	fmt.Scanln(&n)
+	res := myPow(x, n)
+	fmt.Println(res)
+}

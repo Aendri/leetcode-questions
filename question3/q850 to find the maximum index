@@ -1,0 +1,35 @@
+package main
+
+import "fmt"
+
+func peakIndexInMountainArray(arr []int) int {
+	l, index := 0, len(arr)
+	for l <= index {
+		mid := (l + index) / 2
+
+		if arr[mid+1] < arr[mid] && arr[mid-1] < arr[mid] {
+			return arr[mid]
+
+		}
+		if arr[mid-1] > arr[mid] && arr[mid+1] < arr[mid] {
+			index = mid - 1
+		} else {
+			l = mid + 1
+		}
+
+	}
+
+	return -1
+
+}
+func main() {
+	fmt.Printf("Enter size of your array: ")
+	var size int
+	fmt.Scanln(&size)
+	var ar = make([]int, size)
+	for i := 0; i < size; i++ {
+		fmt.Printf("Enter %dth element: ", i)
+		fmt.Scanf("%d", &ar[i])
+	}
+	fmt.Println(peakIndexInMountainArray(ar))
+}

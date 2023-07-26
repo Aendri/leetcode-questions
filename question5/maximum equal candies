@@ -1,0 +1,65 @@
+package main
+
+import (
+	"fmt"
+	"sort"
+)
+
+func possiblecand(candies []int, mid, k int) bool {
+	var pile int
+
+	for i := 0; i < len(candies); i++ {
+		pile += candies[i] / mid
+
+		if pile >= k {
+			return true
+		}
+	}
+	return false
+}
+func binarySearch(candies []int, sum int, k int64) int {
+	ki := int(k)
+	l, h := 1, sum
+	var mid, result int
+	for l <= h {
+		mid = (l + h) / 2
+		if possiblecand(candies, mid, ki) {
+			result = mid
+			l = mid + 1
+		} else {
+			h = mid - 1
+		}
+
+	}
+	return result
+}
+
+func maximumCandies(candies []int, k int64) int {
+	sort.Ints(candies)
+	n := len(candies)
+	kx := int(k)
+	var sum int
+	for i := 0; i < n; i++ {
+		sum += candies[i]
+
+	}
+	return binarySearch(candies, sum/kx, k)
+
+}
+func main() {
+	fmt.Printf("Enter size of your array: ")
+	var size int
+	fmt.Scanln(&size)
+	fmt.Print("enter the size of the array")
+	var cand = make([]int, size)
+	for i := 0; i < size; i++ {
+		fmt.Printf("Enter %dth element: ", i)
+		fmt.Scanf("%d", &cand[i])
+	}
+
+	var kim int64
+	fmt.Print("enter the number of childern")
+	fmt.Scanln(&kim)
+	ans := maximumCandies(cand, kim)
+	fmt.Println(ans)
+}

@@ -1,0 +1,36 @@
+package main
+
+import (
+	"fmt"
+	"math"
+	"sort"
+)
+
+func minSpeedOnTime(dist []int, hour float64) int {
+	n := len(dist)
+	const max int = 1e7
+	x := sort.Search(max, func(s int) bool {
+		s++
+		var cost float64
+		for _, v := range dist[:n-1] {
+			cost += math.Ceil(float64(v) / float64(s))
+		}
+		cost += float64(dist[n-1]) / float64(s)
+		return cost <= hour
+
+	})
+	if x == max {
+		return -1
+	}
+	return x + 1
+
+}
+
+func main() {
+	var hour int
+	fmt.Print("enter the hours ")
+	fmt.Scanln(&hour)
+	dis := []int{1, 3, 2}
+	res := minSpeedOnTime(dis, float64(hour))
+	fmt.Println(res)
+} 

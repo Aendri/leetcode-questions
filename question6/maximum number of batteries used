@@ -1,0 +1,43 @@
+package main
+
+import (
+	"fmt"
+	"sort"
+)
+
+func maxRunTime(n int, batteries []int) int64 {
+	sort.Ints(batteries)
+	liv := make([]int64, n)
+	for i := 0; i < n; i++ {
+		liv[i] = int64(batteries[len(batteries)-n+i])
+	}
+	extra := int64(0)
+	for i := 0; i < len(batteries)-n; i++ {
+		extra += int64(batteries[i])
+	}
+	for i := 0; i < n-1; i++ {
+		if extra < int64(i+1)*(liv[i+1]-liv[i]) {
+			return liv[i] + extra/int64(i+1)
+		}
+		extra -= int64(i+1) * (liv[i+1] - liv[i])
+
+	}
+	return liv[n-1] + extra/int64(n)
+}
+
+func main() {
+	var nc int
+	fmt.Print("enter the number of computers")
+	fmt.Scanln(&nc)
+	var size int
+	fmt.Print("enter the number of batteries to be used")
+	fmt.Scanln(&size)
+	var arr = make([]int, size)
+	for i := 0; i < size; i++ {
+		fmt.Printf("enter the %d elements ", i)
+		fmt.Scanf("%d", &arr[i])
+	}
+	res := maxRunTime(nc, arr)
+	fmt.Println(res)
+
+}
